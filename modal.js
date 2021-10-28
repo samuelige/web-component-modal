@@ -82,11 +82,22 @@ class Modal extends HTMLElement {
                     <slot></slot>
                 </section>
                 <footer id="actions">
-                    <button id="confirm">Confirm</button>
-                    <button id="cancel">Cancel</button>
+                    <button id="confirm-btn">Confirm</button>
+                    <button id="cancel-btn">Cancel</button>
                 </footer>
             </div>
         `;
+
+        const slots = this.shadowRoot.querySelectorAll('slot');
+        slots[1].addEventListener('slotchange', event => {
+            console.dir(slots[1].assignedNodes());
+        });
+
+        const cancelButton = this.shadowRoot.querySelector('#cancel-btn');
+        const confirmButton = this.shadowRoot.querySelector('#confirm-btn');
+
+        cancelButton.addEventListener('click', this._cancel.bind(this));
+        confirmButton.addEventListener('click', this._confirm.bind(this));
     }
 
     attributedChangeCallback(name, oldValue, newValue) {
@@ -105,6 +116,21 @@ class Modal extends HTMLElement {
     open() {
         this.setAttribute('opened', '')
         this.isOpen = true;
+    }
+
+    hide() {
+        if(this.hasAttribute('opened')) {
+            this.removeAttribute('opened');
+        }
+        this.isOpen = false;
+    }
+
+    _cancel() {
+        this.hide();
+    }
+
+    _confirm() {
+        this.hide();
     }
 }
 
