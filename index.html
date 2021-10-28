@@ -19,8 +19,22 @@
 </head>
     <body>
         <wc-modal>
+            <h1 slot="title">Watch out!</h1>
             <p>with your confirmattion you agree to pay the full amount!</p>
         </wc-modal>
         <button>order a ride!</button>
+
+        <script>
+            const confirmButton = document.querySelector('button');
+            const modal = document.querySelector('wc-modal');
+
+            confirmButton.addEventListener('click', () => {
+                // if(!modal.isOpen) {
+                //     modal.open();
+                // }
+                modal.open();
+                console.log('opening!');
+            });
+        </script>
     </body>
 </html>
